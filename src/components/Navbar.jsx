@@ -37,7 +37,7 @@ const Navbar = ({ setResults, results }) => {
 
 const [loading, setLoading] = useState(true);
 const [page, setPage] = useState(1);
-const perPage = 50; 
+const perPage = 500; 
  
 
 

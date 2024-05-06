@@ -1,8 +1,19 @@
-# React + Vite
+# JobApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to JobApp! This project is designed to help you get started with job search and applications.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To get started with JobApp, follow these steps:
+
+1. Clone the repository to your local machine using the following command:
+
+   ```bash
+   git clone https://github.com/sDEV-eloper/JobApp.git
+
+2. Now to run app:
+
+``` bash 
+cd JobApp 
+npm install
+npm run dev
