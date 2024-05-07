@@ -21,7 +21,7 @@ const StyledAutocomplete = styled(Autocomplete)({
   },
 });
 
-const Navbar = ({ setResults, results }) => {
+const Navbar = ({ setResults, results, setLoading }) => {
   const [allData, setAllData] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -34,8 +34,6 @@ const Navbar = ({ setResults, results }) => {
   const [experience, setExperience] = useState();
   const[pay, setPay]=useState()
 
-
-const [loading, setLoading] = useState(true);
 const [page, setPage] = useState(1);
 const perPage = 500; 
  
