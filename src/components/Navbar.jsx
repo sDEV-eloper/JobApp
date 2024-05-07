@@ -14,12 +14,14 @@ const StyledToolbar = styled(Toolbar)({
   gap: 4,
 });
 
-
-const StyledAutocomplete = styled(Autocomplete)({
-  "& .MuiAutocomplete-inputRoot": {
-    height: 36, 
+const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
+  width: 150,
+  borderRadius: 1,
+  bgcolor: "white",
+  "& .MuiInputBase-input": {
+    fontSize: "0.8rem",
   },
-});
+}));
 
 const Navbar = ({ setResults, results, setLoading }) => {
   const [allData, setAllData] = useState([]);
@@ -32,12 +34,10 @@ const Navbar = ({ setResults, results, setLoading }) => {
   const [location, setLocation] = useState();
   const [company, setCompany] = useState();
   const [experience, setExperience] = useState();
-  const[pay, setPay]=useState()
+  const [pay, setPay] = useState();
 
-const [page, setPage] = useState(1);
-const perPage = 500; 
- 
-
+  const [page, setPage] = useState(1);
+  const perPage = 500;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -47,8 +47,8 @@ const perPage = 500;
 
         const body = JSON.stringify({
           limit: perPage,
-        offset: (page - 1) * perPage,
-       ...results
+          offset: (page - 1) * perPage,
+          ...results,
         });
 
         const requestOptions = {
@@ -62,8 +62,8 @@ const perPage = 500;
           requestOptions
         );
         const data = await response.json();
-        setLoading(false)
-        setResults(prevJobLists =>
+        setLoading(false);
+        setResults((prevJobLists) =>
           page === 1 ? data?.jdList : [...prevJobLists, ...results]
         );
         setAllData(data?.jdList);
@@ -77,45 +77,44 @@ const perPage = 500;
         const uniqueCompany = [
           ...new Set(data?.jdList?.map((job) => job?.companyName)),
         ];
-        const uniqueExperience = [0, 1, 2,3,4,5,6,7,8,9,10 ];
-        const uniquePay= [
+        const uniqueExperience = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const uniquePay = [
           ...new Set(data?.jdList?.map((job) => job?.minJdSalary)),
         ];
-        const uniquePayUSD = uniquePay?.filter(salaryINR => salaryINR !== null).map(salaryINR => `${salaryINR*1000} USD`);
-        
+        const uniquePayUSD = uniquePay
+          ?.filter((salaryINR) => salaryINR !== null)
+          .map((salaryINR) => `${salaryINR * 1000} USD`);
+
         setJob(uniqueJobRoles);
         setLocation(uniqueJobLocations);
         setCompany(uniqueCompany);
         setExperience(uniqueExperience);
         setPay(uniquePayUSD);
         setLoading(false);
-      } catch (error) { 
+      } catch (error) {
         console.error(error);
         setLoading(false);
       }
     };
 
     fetchPosts();
-  }, [page]); 
+  }, [page]);
 
   useEffect(() => {
-    console.log("ad", allData)
+    console.log("ad", allData);
     const filteredResults = allData.filter((result) => {
-      const basePayInUSD = result.minJdSalary*1000 + ' USD'
-
+      const basePayInUSD = result.minJdSalary * 1000 + " USD";
 
       return (
         (result.jobRole === selectedJob || !selectedJob) &&
-        (result.location === selectedLocation || !selectedLocation)&&
-        (result.minExp === selectedExperience || !selectedExperience)&&
-        (basePayInUSD === selectedBasePay || !selectedBasePay)&&
+        (result.location === selectedLocation || !selectedLocation) &&
+        (result.minExp === selectedExperience || !selectedExperience) &&
+        (basePayInUSD === selectedBasePay || !selectedBasePay) &&
         (result.companyName === selectedCompany || !selectedCompany)
-        
       );
     });
 
-    
-// Update filtered results   
+    // Update filtered results
     setResults(filteredResults);
   }, [
     selectedJob,
@@ -123,11 +122,8 @@ const perPage = 500;
     selectedCompany,
     selectedLocation,
     selectedBasePay,
-    
   ]);
 
-
-   
   return (
     <AppBar position="fixed" sx={{ bgcolor: "#F1F1F1" }}>
       <StyledToolbar sx={{ padding: 2 }}>
@@ -139,12 +135,7 @@ const perPage = 500;
             setSelectedJob(newValue);
           }}
           sx={{
-            width: 200,
-            borderRadius: 1,
             bgcolor: selectedJob !== null ? "#bbdefb" : "white",
-            "& .MuiInputBase-input": {
-              fontSize: "0.8rem",
-            },
           }}
           renderInput={(params) => (
             <TextField {...params} label="Job" size="small" />
@@ -158,12 +149,7 @@ const perPage = 500;
             setSelectedExperience(newValue);
           }}
           sx={{
-            width: 150,
-            borderRadius: 1,
             bgcolor: selectedExperience !== null ? "#bbdefb" : "white",
-            "& .MuiInputBase-input": {
-              fontSize: "0.8rem",
-            },
           }}
           renderInput={(params) => (
             <TextField {...params} label="Experience" size="small" />
@@ -174,14 +160,6 @@ const perPage = 500;
           options={company}
           onChange={(event, newValue) => {
             setSelectedCompany(newValue);
-          }}
-          sx={{
-            width: 150,
-            borderRadius: 1,
-            bgcolor: selectedCompany !== null ? "#bbdefb" : "white",
-            "& .MuiInputBase-input": {
-              fontSize: "0.8rem",
-            },
           }}
           renderInput={(params) => (
             <TextField {...params} label="Company" size="small" />
@@ -194,12 +172,7 @@ const perPage = 500;
             setSelectedLocation(newValue);
           }}
           sx={{
-            width: 150,
-            borderRadius: 1,
             bgcolor: selectedLocation !== null ? "#bbdefb" : "white",
-            "& .MuiInputBase-input": {
-              fontSize: "0.8rem",
-            },
           }}
           renderInput={(params) => (
             <TextField {...params} label="Location" size="small" />
@@ -213,12 +186,7 @@ const perPage = 500;
             setSelectedBasePay(newValue);
           }}
           sx={{
-            width: 150,
-            borderRadius: 1,
             bgcolor: selectedBasePay !== null ? "#bbdefb" : "white",
-            "& .MuiInputBase-input": {
-              fontSize: "0.8rem",
-            },
           }}
           renderInput={(params) => (
             <TextField {...params} label="Minimum Base Pay" size="small" />
