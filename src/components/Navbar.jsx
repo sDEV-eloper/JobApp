@@ -14,7 +14,7 @@ const StyledToolbar = styled(Toolbar)({
   gap: 4,
 });
 
-const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
+const StyledAutocomplete = styled(Autocomplete)(() => ({
   width: 150,
   borderRadius: 1,
   bgcolor: "white",
@@ -108,7 +108,7 @@ const Navbar = ({ setResults, results, setLoading }) => {
       return (
         (result.jobRole === selectedJob || !selectedJob) &&
         (result.location === selectedLocation || !selectedLocation) &&
-        (result.minExp === selectedExperience || !selectedExperience) &&
+        (result.minExp <= selectedExperience && selectedExperience <=result.maxExp || !selectedExperience) &&
         (basePayInUSD === selectedBasePay || !selectedBasePay) &&
         (result.companyName === selectedCompany || !selectedCompany)
       );

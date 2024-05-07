@@ -6,7 +6,6 @@ const Feed = ({ results, loading }) => {
 
   return (
 <Box flex={4} p={{ xs: 0, md: 2 }} marginTop={{ xs: 20, md: 10 }}>
-  {console.log(loading, results.length)}
   {loading && (results && results.length === 0) ? (
  
     <Stack
